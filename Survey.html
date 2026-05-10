@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iSchool - Free Session Feedback</title>
+    <style>
+        /* iSchool Color Palette Derived from Metadata */
+        :root {
+            /* Blue color derived from metadata swatch R=0 G=113 B=188 [cite: 66] */
+            --ischool-blue: #0071BC;
+            /* Yellow color derived from metadata 'RGB Yellow' R=255 G=255 B=0 [cite: 24] */
+            --ischool-yellow: #FFFF00;
+            /* Orange color derived from metadata 'R=247 G=147 B=30' [cite: 42] */
+            --ischool-orange: #F7931E;
+            
+            --bg-color: #f9f9f9;
+            --text-color: #333;
+            --border-color: #ccc;
+        }
+
+        body {
+            /* Prioritizing Somar Rounded as defined in metadata fonts [cite: 12] */
+            font-family: 'Somar Rounded', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 20px;
+            margin: 0;
+        }
+
+        .form-container {
+            max-width: 750px;
+            margin: 20px auto;
+            background: #fff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-top: 10px solid var(--ischool-blue);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .logo {
+            max-width: 250px;
+            height: auto;
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            color: var(--ischool-blue);
+            font-size: 2em;
+            margin-bottom: 5px;
+            margin-top: 0;
+        }
+
+        .description {
+            color: #555;
+            font-size: 1em;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            border-bottom: 3px solid var(--ischool-yellow);
+            padding-bottom: 5px;
+            margin-top: 35px;
+            margin-bottom: 20px;
+            font-size: 1.3em;
+            font-weight: bold;
+            color: var(--ischool-blue);
+        }
+
+        .question {
+            margin-bottom: 25px;
+        }
+
+        .question p {
+            font-weight: 600;
+            margin-bottom: 12px;
+            margin-top: 0;
+        }
+
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .radio-label {
+            display: flex;
+            align-items: center;
+            padding: 12px 18px;
+            background: #fff;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .radio-label:hover {
+            border-color: var(--ischool-orange);
+            background-color: #fffaf5;
+        }
+
+        .radio-label input[type="radio"] {
+            margin-right: 12px;
+            accent-color: var(--ischool-orange);
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        input[type="number"], textarea, input[type="text"], input[type="email"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-family: inherit;
+            box-sizing: border-box;
+            transition: border-color 0.3s;
+        }
+
+        input[type="number"]:focus, textarea:focus, input[type="text"]:focus, input[type="email"]:focus {
+            outline: none;
+            border-color: var(--ischool-blue);
+        }
+
+        textarea {
+            resize: vertical;
+            height: 100px;
+        }
+
+        .submit-btn {
+            display: block;
+            width: 100%;
+            padding: 18px;
+            background-color: var(--ischool-blue);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 40px;
+            transition: background-color 0.3s, transform 0.1s;
+        }
+
+        .submit-btn:hover {
+            background-color: #00568f;
+        }
+
+        .submit-btn:active {
+            transform: translateY(1px);
+        }
+
+        #success-message {
+            display: none;
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        #success-message h2 {
+            color: var(--ischool-blue);
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        
+        #success-message p {
+            font-size: 1.1em;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+
+<div class="form-container">
+    <div id="form-wrapper">
+        <div class="header">
+            <img src="image1.png" alt="iSchool Logo" class="logo">
+            <h1>Free Session Feedback</h1>
+            <p class="description">Thank you for participating! Please share your experience to help us improve. This will only take a moment.</p>
+        </div>
+
+        <form id="ischoolFeedbackForm">
+            
+            <div class="section-title">1. Your Child's Engagement</div>
+            
+            <div class="question">
+                <p>How much did your child enjoy the free session?</p>
+                <div class="radio-group">
+                    <label class="radio-label"><input type="radio" name="enjoyment" value="5" required> 5 - Loved it! They didn't want it to end.</label>
+                    <label class="radio-label"><input type="radio" name="enjoyment" value="4"> 4 - Enjoyed it a lot.</label>
+                    <label class="radio-label"><input type="radio" name="enjoyment" value="3"> 3 - It was okay.</label>
+                    <label class="radio-label"><input type="radio" name="enjoyment" value="2"> 2 - Didn't enjoy it much.</label>
+                    <label class="radio-label"><input type="radio" name="enjoyment" value="1"> 1 - Did not enjoy it at all.</label>
+                </div>
+            </div>
+
+            <div class="question">
+                <p>How engaged was your child during the activities?</p>
+                <div class="radio-group">
+                    <label class="radio-label"><input type="radio" name="engagement" value="very" required> Very engaged (Actively participating and focused)</label>
+                    <label class="radio-label"><input type="radio" name="engagement" value="somewhat"> Somewhat engaged (Participated most of the time)</label>
+                    <label class="radio-label"><input type="radio" name="engagement" value="neutral"> Neutral (Watched but hesitated to join in)</label>
+                    <label class="radio-label"><input type="radio" name="engagement" value="unengaged"> Distracted or unengaged</label>
+                </div>
+            </div>
+
+            <div class="section-title">2. The Session Experience</div>
+            
+            <div class="question">
+                <p>On a scale of 1-10, how would you rate the overall quality of the session?</p>
+                <input type="number" name="overall_rating" min="1" max="10" placeholder="10" required style="width: 120px;">
+            </div>
+
+            <div class="question">
+                <p>The instructor was enthusiastic and connected well with the children.</p>
+                <div class="radio-group">
+                    <label class="radio-label"><input type="radio" name="instructor" value="Strongly Agree" required> Strongly Agree</label>
+                    <label class="radio-label"><input type="radio" name="instructor" value="Agree"> Agree</label>
+                    <label class="radio-label"><input type="radio" name="instructor" value="Neutral"> Neutral</label>
+                    <label class="radio-label"><input type="radio" name="instructor" value="Disagree"> Disagree</label>
+                </div>
+            </div>
+
+            <div class="section-title">3. Concept & Value</div>
+            
+            <div class="question">
+                <p>Do you feel the core concept of the iSchool program is valuable for your child's development?</p>
+                <div class="radio-group">
+                    <label class="radio-label"><input type="radio" name="value" value="yes" required> Yes, definitely.</label>
+                    <label class="radio-label"><input type="radio" name="value" value="maybe"> I think so, but I need more information.</label>
+                    <label class="radio-label"><input type="radio" name="value" value="no"> No, I don't see the value for my child.</label>
+                </div>
+            </div>
+
+            <div class="section-title">4. Next Steps & Feedback</div>
+            
+            <div class="question">
+                <p>Based on today's experience, how likely are you to enroll your child in the full iSchool program?</p>
+                <div class="radio-group">
+                    <label class="radio-label"><input type="radio" name="enrollment" value="Very likely" required> Very likely</label>
+                    <label class="radio-label"><input type="radio" name="enrollment" value="Somewhat likely"> Somewhat likely</label>
+                    <label class="radio-label"><input type="radio" name="enrollment" value="Undecided"> Undecided</label>
+                    <label class="radio-label"><input type="radio" name="enrollment" value="Unlikely"> Unlikely</label>
+                </div>
+            </div>
+
+            <div class="question">
+                <p>What was your (or your child's) favorite part of the session?</p>
+                <textarea name="favorite_part" placeholder="Tell us what you loved..."></textarea>
+            </div>
+
+            <div class="question">
+                <p>Optional: Leave your name and email if you would like us to follow up with you.</p>
+                <input type="text" name="parent_name" placeholder="Your Name" style="margin-bottom: 12px;">
+                <input type="email" name="parent_email" placeholder="Your Email Address">
+            </div>
+
+            <button type="submit" class="submit-btn">Submit Feedback</button>
+        </form>
+    </div>
+
+    <div id="success-message">
+        <img src="image_0.png" alt="iSchool Logo" class="logo" style="margin-bottom: 30px;">
+        <h2>Thank You!</h2>
+        <p>Your feedback has been submitted successfully. We appreciate your insights!</p>
+    </div>
+</div>
+
+<script>
+    // Handle form submission
+    document.getElementById('ischoolFeedbackForm').addEventListener('submit', function(e) {
+        e.preventDefault(); // Prevent page reload
+        
+        // Hide the form and show the success message
+        document.getElementById('form-wrapper').style.display = 'none';
+        document.getElementById('success-message').style.display = 'block';
+
+        // Data collection endpoint is required here for actual form submission
+    });
+</script>
+
+</body>
+</html>
